@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 
 class ImageController extends Controller
@@ -15,7 +16,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $images = DB::table('images')->orderBy('position', 'asc')->get();
+        return view('show', compact('images'));
     }
 
     /**
@@ -38,7 +40,12 @@ class ImageController extends Controller
     {
         $path = public_path('images/');
         $files = $request->file('file');
-
+        $getTheLastPosition = DB::table('images')->orderBy('position', 'desc')->first();
+        if(empty($getTheLastPosition->position)){
+            $maxPosition = 0;
+        }else {
+            $maxPosition = $getTheLastPosition->position;
+        }
         if($files){
             foreach ($files as $file) {
 //                echo $path . $file->getClientOriginalName();
@@ -50,20 +57,24 @@ class ImageController extends Controller
                     'image_original_name'   => $file->getClientOriginalName(),
                     'image_size'            => $file->getClientSize(),
                     'image_type'            => $file->getClientMimeType(),
+                    'position'              => $maxPosition
                 ]);
+                $maxPosition++;
             }
 
         }
+    }
 
-//        if($request->hasFile('file')){
-//            $image = $request->file('avatar');
-//            $filename = time() . '.' . $image->getClientOriginalExtension();
-//            $path = public_path('images/' . $filename);
-//            Image::make($image)->resize(300, 300)->save($path);
-//
-//            $images = Image::create();
-//        }
-//        dd($request->file[0]->getClientOriginalExtension());
+    public function setPosition(Request $request)
+    {
+        /*
+         * value = id && postion = key
+         */
+        $arr = $request->all();
+//        dd($arr['item']);
+        foreach ($arr['item'] as $key => $value) {
+            Image::whereId($value)->update(['position' => $key]);
+        }
     }
 
     /**

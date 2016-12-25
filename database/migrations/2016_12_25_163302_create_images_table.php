@@ -19,6 +19,7 @@ class CreateImagesTable extends Migration
             $table->string('image_original_name', 60);
             $table->integer('image_size');
             $table->string('image_type', 15);
+            $table->integer('position')->default(0);
             $table->timestamps();
         });
     }

@@ -13,6 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('homepage');
 
 Route::resource('/image', 'ImageController');
+Route::get('/image-position', [
+    'uses'          => 'ImageController@setPosition',
+    'as'            => 'set.position'
+]);

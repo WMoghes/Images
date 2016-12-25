@@ -1,7 +1,7 @@
 @extends('layouts.master_layout')
 
 @section('title')
-    Upload Image
+    Upload Images
 @endsection
 
 @section('header')
@@ -22,7 +22,7 @@
         {{ Form::open(['url' => route('image.store'), 'class' => 'dropzone', 'files' => true, 'method' => 'post', 'id' => 'dropzoneFileUpload']) }}
             {{ Form::submit('Upload', ['class' => 'btn btn-primary', 'id' => 'btn-submit']) }}
         {{ Form::close() }}
-
+        <a href="{{ route('image.index') }}">Display the images</a>
     </div>
 @endsection
 

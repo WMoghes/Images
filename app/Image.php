@@ -13,5 +13,6 @@ class Image extends Model
         'image_original_name',
         'image_size',
         'image_type',
+        'position'
     ];
 }
