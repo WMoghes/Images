@@ -8,7 +8,7 @@
     <title>@yield('title')</title>
 
     {!! Html::style(URL::to('assets/css/bootstrap.min.css')) !!}
-
+    {!! Html::style(URL::to('assets/css/dropzone.css')) !!}
 
     @yield('header')
 
@@ -19,9 +19,11 @@
     @yield('content')
 </div>
 
+{!! Html::script(URL::to('assets/js/jquery-1.11.1.min.js')) !!}
+{!! Html::script(URL::to('assets/js/bootstrap.min.js')) !!}
+{!! Html::script(URL::to('assets/js/dropzone.js')) !!}
 
-{!! Html::script(URL::to('assets/css/jquery-1.11.1.min.js')) !!}
-{!! Html::script(URL::to('assets/css/bootstrap.min.js')) !!}
+@yield('script')
 @yield('footer')
 
 </body>
