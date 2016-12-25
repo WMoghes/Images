@@ -28,25 +28,6 @@
 
 @section('script')
     <script>
-        {{--var baseUrl = "{{ route('image.store') }}";--}}
-        {{--var token = "{{ Session::getToken() }}";--}}
-        {{--Dropzone.autoDiscover = false;--}}
-        {{--var myDropzone = new Dropzone("#dropzoneFileUpload", {--}}
-            {{--url: baseUrl,--}}
-            {{--params: {--}}
-                {{--_token: token--}}
-            {{--}--}}
-        {{--});--}}
-        {{--Dropzone.options.myAwesomeDropzone = {--}}
-            {{--paramName: "file", // The name that will be used to transfer the file--}}
-            {{--maxFilesize: 2, // MB--}}
-            {{--addRemoveLinks: true,--}}
-            {{--accept: function(file, done) {--}}
-
-            {{--},--}}
-        {{--};--}}
-    </script>
-    <script>
         Dropzone.options.dropzoneFileUpload = {
             // Prevents Dropzone from uploading dropped files immediately
             autoProcessQueue: false,
@@ -62,14 +43,26 @@
                 submitButton.addEventListener("click", function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    myDropzone.processQueue();
+                    if(input.length > 2){
+                        myDropzone.processQueue();
+                    } else {
+                        alert('you should upload at least 3 images');
+                    }
                     // autoProcessQueue: true// Tell Dropzone to process all queued files.
                 });
 
                 // You might want to show the submit button only when
                 // files are dropped here:
-                this.on("addedfile", function () {
-                    // Show submit button here and/or inform user to click it.
+                var input = [];
+                this.on("addedfile", function (file) {
+                    input.push(file);
+                    console.log(input.length);
+
+                });
+                this.on("removedfile", function (file) {
+                    input.pop();
+                    console.log(input.length);
+
                 });
                 this.on("complete", function (file) {
                     myDropzone.removeFile(file);

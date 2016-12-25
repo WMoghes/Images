@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Image;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
 
 class ImageController extends Controller
 {
@@ -34,7 +36,34 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $path = public_path('images/');
+        $files = $request->file('file');
+
+        if($files){
+            foreach ($files as $file) {
+//                echo $path . $file->getClientOriginalName();
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move($path, $filename);
+
+                Image::create([
+                    'image_name'            => $filename,
+                    'image_original_name'   => $file->getClientOriginalName(),
+                    'image_size'            => $file->getClientSize(),
+                    'image_type'            => $file->getClientMimeType(),
+                ]);
+            }
+
+        }
+
+//        if($request->hasFile('file')){
+//            $image = $request->file('avatar');
+//            $filename = time() . '.' . $image->getClientOriginalExtension();
+//            $path = public_path('images/' . $filename);
+//            Image::make($image)->resize(300, 300)->save($path);
+//
+//            $images = Image::create();
+//        }
+//        dd($request->file[0]->getClientOriginalExtension());
     }
 
     /**
