@@ -18,6 +18,7 @@
                 <img class="img-responsive" id="image" src="{{ URL::to('images'). '/' . $image->image_name }}" alt="Picture">
                 <br>
                 <a id="submit" href="#" class="btn btn-primary">Crop</a>
+                <a href="{{ route('show-all-crops', $image->id) }}" class="btn btn-primary">Display all crops for this image</a>
             </div>
         </div>
         <div class="col-sm-6">

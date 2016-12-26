@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Crop;
 use App\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,7 +49,6 @@ class ImageController extends Controller
         }
         if($files){
             foreach ($files as $file) {
-//                echo $path . $file->getClientOriginalName();
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move($path, $filename);
 
@@ -94,6 +94,12 @@ class ImageController extends Controller
         return view('show_all', compact('images'));
     }
 
+    public function showAllCrops($id)
+    {
+        $crops = Crop::where('photo_id', $id)->get();
+        return view('display_crops', compact('crops'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -118,6 +124,8 @@ class ImageController extends Controller
         $img = Image::make($pathImage);
         $img->crop(intval($request->width),intval($request->height),intval($request->x),intval($request->y));
         $img->save($pathForCrop, 100);
+
+        Crop::create(['photo_id' => $id, 'crop_image_name' => $filename]);
     }
 
     /**
