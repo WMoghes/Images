@@ -19,7 +19,7 @@
     @yield('content')
 </div>
 
-{!! Html::script(URL::to('assets/js/jquery-1.11.1.min.js')) !!}
+{!! Html::script(URL::to('assets/js/jquery.min.js')) !!}
 {!! Html::script(URL::to('assets/js/bootstrap.min.js')) !!}
 {!! Html::script(URL::to('assets/js/dropzone.js')) !!}
 

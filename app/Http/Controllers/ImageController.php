@@ -88,6 +88,12 @@ class ImageController extends Controller
         //
     }
 
+    public function showAll()
+    {
+        $images = DB::table('images')->orderBy('position', 'asc')->get();
+        return view('show_all', compact('images'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -96,7 +102,13 @@ class ImageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $image = Image::findOrFail($id);
+        return view('edit', compact('image'));
+    }
+
+    public function cropImage(Request $request)
+    {
+        dd($request->all());
     }
 
     /**

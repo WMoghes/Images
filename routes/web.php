@@ -20,3 +20,11 @@ Route::get('/image-position', [
     'uses'          => 'ImageController@setPosition',
     'as'            => 'set.position'
 ]);
+Route::get('/show-all', [
+    'uses'          => 'ImageController@showAll',
+    'as'            => 'show-all'
+]);
+Route::get('/crop', [
+    'uses'          => 'ImageController@cropImage',
+    'as'            => 'crop'
+]);

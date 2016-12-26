@@ -23,6 +23,8 @@
             {{ Form::submit('Upload', ['class' => 'btn btn-primary', 'id' => 'btn-submit']) }}
         {{ Form::close() }}
         <a href="{{ route('image.index') }}">Display the images</a>
+        <br>
+        <a href="{{ route('show-all') }}">Editing on my images</a>
     </div>
 @endsection
 
