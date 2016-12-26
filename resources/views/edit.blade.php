@@ -80,19 +80,35 @@
     </script>
     <script>
         $(document).ready(function() {
+            var $image = $('#image');
+            var arr = [];
+            $image.on({
+                'crop.cropper': function (e) {
+//                    console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
+                    arr['x'] = e.x;
+                    arr['y'] = e.y;
+                    arr['width'] = e.width;
+                    arr['height'] = e.height;
+                    arr['scaleX'] = e.scaleX;
+                    arr['scaleY'] = e.scaleY;
+                }
+            });
+
             $('#submit').click(function(event) {
                 event.preventDefault();
-                var URLBase = '{{ route('crop') }}';
-
+                console.log(arr);
+                var URLBase = '{{ route('crop', $image->id) }}';
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
-                        width: $('#preview-1').width(),
-                        height: $('#preview-1').height(),
-                        top: $('#preview-1').css('top'),
-                        left: $('#preview-1').css('left'),
+                        width: arr['width'],
+                        height: arr['height'],
+                        x: arr['x'],
+                        y: arr['y'],
+                        scaleX: arr['scaleX'],
+                        scaleY: arr['scaleY'],
                     },
                     type: 'GET',
                     url: URLBase

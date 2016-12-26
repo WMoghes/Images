@@ -24,7 +24,7 @@ Route::get('/show-all', [
     'uses'          => 'ImageController@showAll',
     'as'            => 'show-all'
 ]);
-Route::get('/crop', [
+Route::get('/crop/{id}', [
     'uses'          => 'ImageController@cropImage',
     'as'            => 'crop'
 ]);

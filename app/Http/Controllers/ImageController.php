@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
+use App\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Intervention\Image\ImageManager;
+use Intervention\Image\Facades\Image;
 
 class ImageController extends Controller
 {
@@ -52,7 +52,7 @@ class ImageController extends Controller
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move($path, $filename);
 
-                Image::create([
+                Photo::create([
                     'image_name'            => $filename,
                     'image_original_name'   => $file->getClientOriginalName(),
                     'image_size'            => $file->getClientSize(),
@@ -73,7 +73,7 @@ class ImageController extends Controller
         $arr = $request->all();
 //        dd($arr['item']);
         foreach ($arr['item'] as $key => $value) {
-            Image::whereId($value)->update(['position' => $key]);
+            Photo::whereId($value)->update(['position' => $key]);
         }
     }
 
@@ -102,13 +102,22 @@ class ImageController extends Controller
      */
     public function edit($id)
     {
-        $image = Image::findOrFail($id);
+        $image = Photo::findOrFail($id);
         return view('edit', compact('image'));
     }
 
-    public function cropImage(Request $request)
+    public function cropImage(Request $request, $id)
     {
-        dd($request->all());
+//        dd($request->all());
+        $image = Photo::findOrFail($id);
+        $filename = time() . '_crop_' . $image->image_original_name;
+
+        $pathForCrop = public_path('images/imagesAfterCroped/' . $filename);
+        $pathImage = public_path('images/' . $image->image_name);
+
+        $img = Image::make($pathImage);
+        $img->crop(intval($request->width),intval($request->height),intval($request->x),intval($request->y));
+        $img->save($pathForCrop, 100);
     }
 
     /**
