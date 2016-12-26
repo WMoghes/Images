@@ -15,10 +15,10 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('image_name', 60);
-            $table->string('image_original_name', 60);
+            $table->string('image_name', 100);
+            $table->string('image_original_name', 100);
             $table->integer('image_size');
-            $table->string('image_type', 15);
+            $table->string('image_type', 25);
             $table->integer('position')->default(0);
             $table->timestamps();
         });

@@ -16,29 +16,6 @@
     <div class="row">
         <h1>Our Images</h1>
         <hr>
-        {{--<table id="sortable" class="table">--}}
-            {{--<thead>--}}
-                {{--<tr>--}}
-                    {{--<th>Image</th>--}}
-                    {{--<th>Original Name</th>--}}
-                    {{--<th>Image Name</th>--}}
-                    {{--<th>Image Size</th>--}}
-                    {{--<th>Image Type</th>--}}
-                {{--</tr>--}}
-            {{--</thead>--}}
-            {{--<tbody>--}}
-                {{--@foreach($images as $image)--}}
-                    {{--<tr>--}}
-                        {{--<td><img src="{{ URL::to('images'). '/' . $image->image_name }}" width="100" height="100"></td>--}}
-                        {{--<td>{{ $image->image_original_name }}</td>--}}
-                        {{--<td>{{ $image->image_name }}</td>--}}
-                        {{--<td>{{ $image->image_size }}</td>--}}
-                        {{--<td>{{ $image->image_type }}</td>--}}
-                    {{--</tr>--}}
-                {{--@endforeach--}}
-
-            {{--</tbody>--}}
-        {{--</table>--}}
     </div>
     <div class="row">
         <ul id="sortable">
@@ -49,14 +26,12 @@
                             <img src="{{ URL::to('images'). '/' . $image->image_name }}" width="100" height="100">
                         </div>
                     </li>
-                    {{--<li class="ui-state-default">{{ $image->image_original_name }}</li>--}}
-                    {{--<li class="ui-state-default">{{ $image->image_name }}</li>--}}
-                    {{--<li class="ui-state-default">{{ $image->image_size }}</li>--}}
-                    {{--<li class="ui-state-default">{{ $image->image_type }}</li>--}}
                 @endforeach
+            @else
+                <h1>There's no images</h1>
             @endif
         </ul>
-        <a href="{{ route('homepage') }}">Back to upload images</a>
+        <a href="{{ route('homepage') }}" class="btn btn-primary">Back to upload images</a>
     </div>
 @endsection
 

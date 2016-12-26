@@ -12,6 +12,9 @@
         .upload-images {
             height: 500px;
         }
+        #dropzoneFileUpload {
+            margin-bottom: 10px;
+        }
     </style>
 @endsection
 
@@ -22,9 +25,8 @@
         {{ Form::open(['url' => route('image.store'), 'class' => 'dropzone', 'files' => true, 'method' => 'post', 'id' => 'dropzoneFileUpload']) }}
             {{ Form::submit('Upload', ['class' => 'btn btn-primary', 'id' => 'btn-submit']) }}
         {{ Form::close() }}
-        <a href="{{ route('image.index') }}">Display the images</a>
-        <br>
-        <a href="{{ route('show-all') }}">Editing on my images</a>
+        <a href="{{ route('image.index') }}" class="btn btn-primary">Display the images</a>
+        <a href="{{ route('show-all') }}" class="btn btn-primary">Editing on my images</a>
     </div>
 @endsection
 

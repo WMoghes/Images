@@ -21,15 +21,12 @@
                     <a href="{{ route('image.edit', $image->id) }}">
                         <img src="{{ URL::to('images'). '/' . $image->image_name }}" width="100" height="100">
                     </a>
-
-                    {{--<li class="ui-state-default">{{ $image->image_original_name }}</li>--}}
-                    {{--<li class="ui-state-default">{{ $image->image_name }}</li>--}}
-                    {{--<li class="ui-state-default">{{ $image->image_size }}</li>--}}
-                    {{--<li class="ui-state-default">{{ $image->image_type }}</li>--}}
                 @endforeach
+            @else
+                <h1>There's no images</h1>
             @endif
         </ul>
-        <a href="{{ route('homepage') }}">Back to upload images</a>
+        <a href="{{ route('homepage') }}" class="btn btn-primary">Back to upload images</a>
     </div>
 @endsection
 

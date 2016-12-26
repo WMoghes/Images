@@ -20,9 +20,11 @@
                 @foreach($crops as $crop)
                     <img src="{{ URL::to('images/imagesAfterCroped'). '/' . $crop->crop_image_name }}" width="100" height="100">
                 @endforeach
+            @else
+                <h1>There's no crops</h1>
             @endif
         </ul>
-        <a href="{{ route('homepage') }}">Back to upload images</a>
+        <a href="{{ route('homepage') }}" class="btn btn-primary">Back to upload images</a>
     </div>
 @endsection
 

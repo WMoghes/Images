@@ -11,9 +11,8 @@ use Intervention\Image\Facades\Image;
 class ImageController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * To display all images according position
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -22,20 +21,8 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * To store all images into (public/images)
+     * @param Request $request
      */
     public function store(Request $request)
     {
@@ -61,7 +48,6 @@ class ImageController extends Controller
                 ]);
                 $maxPosition++;
             }
-
         }
     }
 
@@ -78,22 +64,20 @@ class ImageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Displaying all images to select one of them to edit
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
-    {
-        //
-    }
-
     public function showAll()
     {
         $images = DB::table('images')->orderBy('position', 'asc')->get();
         return view('show_all', compact('images'));
     }
 
+    /**
+     * To display all crops we have for a specific user
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showAllCrops($id)
     {
         $crops = Crop::where('photo_id', $id)->get();
@@ -101,16 +85,21 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the image for a specific user to start crop it
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         $image = Photo::findOrFail($id);
         return view('edit', compact('image'));
     }
+
+    /**
+     * This method for add a new row inside crops table for each new crop
+     * @param Request $request
+     * @param $id
+     */
 
     public function cropImage(Request $request, $id)
     {
@@ -126,28 +115,5 @@ class ImageController extends Controller
         $img->save($pathForCrop, 100);
 
         Crop::create(['photo_id' => $id, 'crop_image_name' => $filename]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
